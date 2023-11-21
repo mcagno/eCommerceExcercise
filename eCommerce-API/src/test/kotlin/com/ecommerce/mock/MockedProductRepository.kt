@@ -11,6 +11,6 @@ class MockedProductRepository : IProductRepository {
         return product
     }
 
-    override fun get(): Collection<Product> = _products.toList()
+    override fun get(): List<Product> = _products.toList()
 
 }

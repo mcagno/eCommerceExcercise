@@ -1,7 +1,8 @@
 package com.ecommerce.model
 
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class Product(
     val id: Int,
     val name: String,
@@ -12,14 +13,14 @@ data class Product(
     val discontinued: Boolean = false,
     val description: String = "",
     val brand: String = "",
-    val SKU: String = "",
+    val sku: String = "",
     val category: String = "",
     val length: Int = 0,
     val width: Int = 0,
     val weight: Int = 0,
     val materialComposition: String = "",
     val organic: Boolean = false
-    )
+)
 
 
 
