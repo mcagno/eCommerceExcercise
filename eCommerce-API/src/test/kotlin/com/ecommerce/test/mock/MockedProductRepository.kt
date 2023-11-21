@@ -1,11 +1,10 @@
-package com.ecommerce.infrastructure
+package com.ecommerce.test.mock
 
+import com.ecommerce.infrastructure.IProductRepository
 import com.ecommerce.model.Product
 import com.ecommerce.services.IProductFilter
-import org.koin.core.component.KoinComponent
 
-class InMemoryRepository : IProductRepository, KoinComponent {
-
+class MockedProductRepository : IProductRepository {
     private val products : MutableList<Product> = mutableListOf()
 
     override fun add(product: Product): Product {

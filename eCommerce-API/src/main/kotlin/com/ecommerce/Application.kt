@@ -1,7 +1,8 @@
 package com.ecommerce
 
 import com.ecommerce.DI.DIModule
-import com.ecommerce.plugins.*
+import com.ecommerce.plugins.configureRouting
+import com.ecommerce.plugins.configureSerialization
 import io.ktor.server.application.*
 
 import org.koin.ktor.plugin.Koin

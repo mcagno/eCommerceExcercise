@@ -7,6 +7,7 @@ import org.koin.core.component.KoinComponent
 interface IProductService {
     fun getAllProducts(): Collection<Product>
     fun add(product: Product): Product
+    fun query(productFilter: IProductFilter): Collection<Product>
 }
 
 class ProductService(private var productRepository: IProductRepository) : KoinComponent, IProductService {
@@ -14,5 +15,8 @@ class ProductService(private var productRepository: IProductRepository) : KoinCo
     override fun getAllProducts(): Collection<Product> = productRepository.get()
 
     override fun add(product: Product): Product = productRepository.add(product)
+    override fun query(productFilter: IProductFilter): Collection<Product> {
+        return productRepository.query(productFilter)
+    }
 
 }
