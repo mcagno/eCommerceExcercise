@@ -2,6 +2,7 @@ package com.ecommerce.services
 
 import com.ecommerce.model.Product
 import kotlinx.serialization.*
+import kotlinx.serialization.json.Json
 import kotlin.reflect.full.createType
 
 import kotlin.reflect.full.memberProperties
@@ -10,12 +11,16 @@ interface IProductFilter {
     fun apply(products: Collection<Product>): Collection<Product>
 }
 @Serializable
-class CompoundProductFilter(private val filters: Collection<ProductFilter>) : IProductFilter {
+class CompoundProductFilter() : IProductFilter, MutableList<ProductFilter> by mutableListOf() {
 
+    constructor(filters: Collection<ProductFilter>) : this() {
+        addAll(filters)
+    }
     override fun apply(products: Collection<Product>): Collection<Product> {
         var result : Collection<Product> = products.toList()
-        for (criterion in filters)
-            result = criterion.apply(result)
+        for (filter in asIterable())
+            result = filter.apply(result)
+        val testString = Json.encodeToString(this.toList())
         return result
     }
 }

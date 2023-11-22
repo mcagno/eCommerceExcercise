@@ -29,7 +29,7 @@ fun Route.productRouting() {
 
         get("query") {
             val query = call.parameters["q"]
-            val filter = Json.decodeFromString<CompoundProductFilter>(query!!)
+            val filter = CompoundProductFilter(Json.decodeFromString<List<ProductFilter>>(query!!))
             call.respond(productService.query(filter))
         }
 

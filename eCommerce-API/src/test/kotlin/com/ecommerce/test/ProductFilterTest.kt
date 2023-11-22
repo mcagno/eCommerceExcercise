@@ -2,6 +2,7 @@ package com.ecommerce.test
 
 import com.ecommerce.model.Product
 import com.ecommerce.services.*
+import kotlinx.serialization.json.Json
 import kotlin.test.*
 class ProductFilterTest {
     @Test
@@ -89,5 +90,22 @@ class ProductFilterTest {
 
         assertEquals(1, result.size)
         assertEquals(jeans, result.toList()[0])
+    }
+
+    @Test
+    fun `Compound filter deserialization`() {
+        val encodedString = "[{\"fieldName\":\"price\",\"operator\":\"GT\",\"value\":\"11\"},{\"fieldName\":\"name\",\"operator\":\"IN\",\"value\":\"ea\"}]"
+        val compoundProductFilter = CompoundProductFilter(Json.decodeFromString<List<ProductFilter>>(encodedString))
+
+        val firstFilter = ProductFilter("price", ProductFilterOperator.GT, "11")
+        val secondFilter = ProductFilter("name", ProductFilterOperator.IN, "ea")
+
+        assertEquals(2, compoundProductFilter.size)
+        assertEquals(firstFilter.fieldName, compoundProductFilter[0].fieldName)
+        assertEquals(firstFilter.operator, compoundProductFilter[0].operator)
+        assertEquals(firstFilter.value, compoundProductFilter[0].value)
+        assertEquals(secondFilter.fieldName, compoundProductFilter[1].fieldName)
+        assertEquals(secondFilter.operator, compoundProductFilter[1].operator)
+        assertEquals(secondFilter.value, compoundProductFilter[1].value)
     }
 }
